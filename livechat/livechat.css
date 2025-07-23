@@ -46,14 +46,14 @@
     display: flex;
     padding: 10px;
     background: #fff;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--color-primary);
 }
 
 .chat-input input {
     flex: 1;
     padding: 8px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-primary);
 }
 
 .chat-input button {
@@ -77,7 +77,6 @@
     width: 55px;
     height: 55px;
     border-radius: 50%;
-    background-color: var(--color-primary);
     color: white;
     display: flex;
     align-items: center;
@@ -121,7 +120,6 @@
     min-height: 400px;
     max-height: 400px;
 }
-
 
 .chat-input {
     display: flex;
