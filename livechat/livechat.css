@@ -123,7 +123,7 @@
 
 .chat-input {
     display: flex;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--color-primary);
     padding: 5px;
     background: white;
 }
