@@ -9,7 +9,7 @@
         sessionStorage.setItem("device-key", ClientKey);
         let host = window.location.hostname;
         try {
-            fetch(encodeURI(host == "localhost" ? "http://localhost:3001/" : "https://wapi.naylatools.com/" + "detaillivechat"), {
+            fetch(encodeURI(host == "localhost" ? "http://localhost:3001/detaillivechat" : "https://wapi.naylatools.com/detaillivechat"), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -21,7 +21,9 @@
                 if (Data.status == "sukses") {
                     const ws = await connectWebSocket(ClientKey);
                     window.livechatSocket = ws;
-                    RendLiveChat(Data.Device);
+                    let Setting = Data.Device.Setting;
+                    document.documentElement.style.setProperty('--color-primary', Setting.color);
+                    RendLiveChat(Setting);
                 }
             })
         } catch (err) {
@@ -191,7 +193,7 @@ async function RendLiveChat(setting) {
 
         if (!chatBox || !toggleBtn) return;
 
-        if (e.target === toggleBtn) {
+        if (e.target.closest("#chatToggleBtn")) {
             chatBox.style.display = (chatBox.style.display === "none" || chatBox.style.display === "")
                 ? "block"
                 : "none";
@@ -199,4 +201,5 @@ async function RendLiveChat(setting) {
             chatBox.style.display = "none";
         }
     });
+
 }
