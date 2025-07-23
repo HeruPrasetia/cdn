@@ -21,7 +21,7 @@
 
 function connectWebSocket(clientKey) {
     return new Promise((resolve, reject) => {
-        const ws = new WebSocket('ws://ws.naylatools.com/?token=' + encodeURIComponent(clientKey));
+        const ws = new WebSocket(`ws://ws.naylatools.com/?token=${encodeURIComponent(clientKey)}&domain=${window.location.hostname}&usertype=Client`);
 
         ws.onopen = () => {
             console.log('WebSocket connected!');
@@ -104,7 +104,7 @@ async function RendLiveChat() {
     let TagStyle = document.createElement("link");
     TagStyle.rel = "stylesheet";
     TagStyle.type = "text/css";
-    TagStyle.href = "https://cdn.jsdelivr.net/gh/HeruPrasetia/cdn@master/livechat.css";
+    TagStyle.href = "https://cdn.jsdelivr.net/gh/HeruPrasetia/cdn/livechat/livechat.css";
     document.head.appendChild(TagStyle);
 
     rendElm({
