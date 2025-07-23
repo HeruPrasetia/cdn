@@ -1,15 +1,29 @@
 (async function () {
     const thisScript = document.currentScript;
-    const clientKey = thisScript.getAttribute('client-key');
-    console.log('Client Key:', clientKey);
+    const ClientKey = thisScript.getAttribute('client-key');
+    const DeviceKey = thisScript.getAttribute('device-key');
+    console.log('Client Key:', ClientKey);
 
-    if (clientKey) {
-        sessionStorage.setItem("client-key", clientKey);
-
+    if (ClientKey) {
+        sessionStorage.setItem("client-key", ClientKey);
+        sessionStorage.setItem("device-key", ClientKey);
+        let host = window.location.hostname;
         try {
-            const ws = await connectWebSocket(clientKey);
-            window.livechatSocket = ws;
-            RendLiveChat(clientKey);
+            fetch(encodeURI(host == "localhost" ? "http://localhost:3001/" : "https://wapi.naylatools.com/" + "detaillivechat"), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ClientKey, DeviceKey, Domain: host }),
+            }).then(response => response.text()).then(async (hasil) => {
+                if (host === "localhost") console.log(hasil);
+                let Data = JSON.parse(hasil);
+                if (Data.status == "sukses") {
+                    const ws = await connectWebSocket(ClientKey);
+                    window.livechatSocket = ws;
+                    RendLiveChat(Data.Device);
+                }
+            })
         } catch (err) {
             console.error('WebSocket connection failed:', err);
         }
@@ -19,12 +33,14 @@
     }
 })();
 
-function connectWebSocket(clientKey) {
+function connectWebSocket(ClientKey) {
     return new Promise((resolve, reject) => {
-        const ws = new WebSocket(`ws://ws.naylatools.com/?token=${encodeURIComponent(clientKey)}&domain=${window.location.hostname}&usertype=Client`);
+        let url = window.location.hostname == "localhost" ? "ws://localhost:3003/" : "wss://ws.naylatools.com/";
+        const ws = new WebSocket(`${url}?token=${encodeURIComponent(ClientKey)}&domain=${window.location.hostname}&usertype=Client`);
 
         ws.onopen = () => {
             console.log('WebSocket connected!');
+            ws.send({ type: "getprofile" });
             resolve(ws);
         };
 
@@ -100,7 +116,7 @@ function rendElm(opt) {
     }
 }
 
-async function RendLiveChat() {
+async function RendLiveChat(setting) {
     let TagStyle = document.createElement("link");
     TagStyle.rel = "stylesheet";
     TagStyle.type = "text/css";
@@ -126,7 +142,7 @@ async function RendLiveChat() {
                     {
                         elm: "div",
                         cls: "chat-header",
-                        text: "Live Chat"
+                        text: setting.title
                     },
                     {
                         elm: "div",
