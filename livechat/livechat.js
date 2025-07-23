@@ -27,7 +27,7 @@
         } catch (err) {
             console.error('WebSocket connection failed:', err);
         }
-
+        // https://cdn.jsdelivr.net/gh/HeruPrasetia/cdn/livechat/livechat.js
     } else {
         console.warn('client-key attribute not found on script tag!');
     }
@@ -131,7 +131,9 @@ async function RendLiveChat(setting) {
                 elm: "div",
                 cls: "floating-btn bounce2",
                 id: "chatToggleBtn",
-                text: "💬"
+                elms: [
+                    setting.maskot == "none" ? { elm: "button", cls: "floating-btn" } : { elm: "img", src: setting.maskot, style: "width:100%" }
+                ]
             },
             {
                 elm: "div",
