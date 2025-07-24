@@ -29,7 +29,6 @@ let __DataChat = [], typingTimeout = false, __Setting = {}, host = window.locati
                 },
                 body: JSON.stringify({ ClientKey, DeviceKey, FirstCome, Domain: host }),
             }).then(response => response.text()).then(async (hasil) => {
-                if (host === "localhost") console.log(hasil);
                 let Data = JSON.parse(hasil);
                 if (Data.status == "sukses") {
                     __Setting = Data.Device.Setting;
@@ -47,6 +46,11 @@ let __DataChat = [], typingTimeout = false, __Setting = {}, host = window.locati
 
 function GI(id) {
     return document.getElementById(id);
+}
+
+function playSound() {
+    const audio = new Audio("https://wapi.naylatools.com/file/bell.mp3");
+    audio.play().catch(e => console.warn("Gagal play sound:", e));
 }
 
 function connectWebSocket(ClientKey) {
@@ -73,12 +77,12 @@ function connectWebSocket(ClientKey) {
             document.getElementById('chatToggleBtn').classList.add("bounce2");
             let data = JSON.parse(e.data);
             let type = data.type;
-            console.log(data);
             if (type == "detail chat client") {
                 __DataChat = data.data;
                 handleRendBuble();
                 scrollToBottom();
             } else if (type == "pesan dari admin") {
+                playSound();
                 __DataChat.push(data);
                 addBubble(data);
                 scrollToBottom();
