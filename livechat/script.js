@@ -4,6 +4,7 @@ let __DataChat = [], typingTimeout = false, __Setting = {}, host = window.locati
     const thisScript = document.currentScript;
     const ClientKey = thisScript.getAttribute('client-key');
     const DeviceKey = thisScript.getAttribute('device-key');
+    const DomainServer = thisScript.getAttribute('domain-server');
     if (ClientKey) {
         let TagStyle = document.createElement("link");
         TagStyle.rel = "stylesheet";
@@ -19,6 +20,7 @@ let __DataChat = [], typingTimeout = false, __Setting = {}, host = window.locati
         document.body.appendChild(Toast);
         sessionStorage.setItem("client-key", ClientKey);
         sessionStorage.setItem("device-key", DeviceKey);
+        sessionStorage.setItem("domain-server", DomainServer);
         let FirstCome = sessionStorage.getItem("FirstCome") || "YA";
         if (FirstCome == "YA") sessionStorage.setItem("FirstCome", Date.now());
         try {
@@ -56,7 +58,7 @@ function playSound() {
 function connectWebSocket(ClientKey) {
     return new Promise((resolve, reject) => {
         let url = window.location.hostname == "localhost" ? "ws://localhost:3003/" : "wss://ws.naylatools.com/";
-        const ws = new WebSocket(`${url}?token=${ClientKey}&domain=${window.location.hostname}&usertype=Client&devicekey=${sessionStorage.getItem("device-key")}`);
+        const ws = new WebSocket(`${url}?token=${ClientKey}&domain=${sessionStorage.getItem("domain-server")}&usertype=Client&devicekey=${sessionStorage.getItem("device-key")}`);
 
         ws.onopen = () => {
             console.log('WebSocket connected!');
