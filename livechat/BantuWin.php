@@ -66,7 +66,7 @@ function bwlc_embed_script()
     $client_key = esc_attr(get_option('bwlc_client_key'));
     $device_key = esc_attr(get_option('bwlc_device_key'));
     if ($client_key) {
-        echo '<script src="https://cdn.jsdelivr.net/gh/HeruPrasetia/cdn@master/livechat/livechat.js" domain-server="apps.bantuwin.id" client-key="' . $client_key . '" device-key="' . $device_key . '"></script>';
+        echo '<script src="https://cdn.jsdelivr.net/gh/HeruPrasetia/cdn@master/livechat/livechatv-2.js" domain-server="apps.bantuwin.id" client-key="' . $client_key . '" device-key="' . $device_key . '"></script>';
     }
 }
 ?>
