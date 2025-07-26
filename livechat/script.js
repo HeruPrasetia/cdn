@@ -159,7 +159,7 @@ async function RendLiveChat() {
             elm: [
                 {
                     elm: "div", cls: "floating-btn", id: "chatToggleBtn", elms: [
-                        __Setting.maskot == "none" ? { elm: "button", cls: "floating-btn" } : { elm: "img", src: __Setting.maskot, style: "width:100%" }
+                        __Setting.maskot == "none" ? { elm: "img", src: "https://wapi.naylatools.com/file/DefaultLiveChatMaskot.png", style: "width:100%" } : { elm: "img", src: "https://wapi.naylatools.com/file/" + __Setting.maskot, style: "width:100%" }
                     ]
                 },
                 {
@@ -202,7 +202,7 @@ async function RendLiveChat() {
             elm: [
                 {
                     elm: "div", cls: "floating-btn", id: "chatToggleBtn", elms: [
-                        __Setting.maskot == "none" ? { elm: "button", cls: "floating-btn" } : { elm: "img", src: __Setting.maskot, style: "width:100%" }
+                        __Setting.maskot == "none" ? { elm: "img", src: "https://wapi.naylatools.com/file/DefaultLiveChatMaskot.png", style: "width:100%" } : { elm: "img", src: "http://" + host + ":3001/file/" + __Setting.maskot, style: "width:100%" }
                     ]
                 },
                 {
